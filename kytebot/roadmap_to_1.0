@@ -1,0 +1,80 @@
+Kytebot Roadmap
+
+# Kytebot is the project name for a Java IRC bot closely based off the PIRCBot framework. It is where the
+# author plays with any spare time
+# Future Goals for this project
+# - Reach v1.0 -- a functional IRCBot
+# - Test NLP
+# - Test basic AI
+# - Test integration with Hadoop
+# - Integrate Text-to-Speech and Speech-to-Text
+
+Current Status: Kytebot is currently at version zero, i.e. - functional, but barely
+
+
+ V0.1 Sprint Plan (to be finished end of June 2015)
+Major Goals
+ - (DONE 6/13/2015) Implement a second msgQ to streamline parsing of Input/Output messages
+ - 
+Minor Goals
+ - (DONE 6/13/2015) Refactor package structure
+ - (DONE 6/13/2015) Refactor folder structure
+ - (DONE 6/13/2015) Make time to integrate with git (did not integrate with maven)
+ 
+ 
+ V0.2 Sprint Plan (to be finished end of June 2015)
+Major Goals
+ - Implement basic IRC outbound commands
+ - (DONE 6/13/2015) Implement logging by user/chan
+Minor Goals
+ - (DONE 6/13/2015) Refactor logging folder structure
+ - (DONE 6/13/2015) Add JUnit to the project
+ - (DONE 6/27/2015) Utilize console/System.out so only channel messages are displayed (less debug)
+ 
+ 
+ V0.3 Sprint Plan (to be finished end of July 2015)
+Major Goals
+ - (DONE 7/10/2015) Implement a simple configuration system
+ - (PUSHED) Implement file-based responses (xml, txt?)
+    -I am kytebot, lord protector of the realm/I am kytebot, defender of liberty.
+Minor Goals
+ - (DONE 8/12/2015) Unit test core code, with aim of integration testing
+ - 
+ 
+ 
+ V0.4 Sprint Plan (to be finished end of Aug 2015)
+Major Goals
+ - (PULLED) Refactor Kytebot Command Parser into KytebotCommandParser and KytebotResponseParser
+ - (PUSHED) Implement file-based responses (xml, txt?)
+    -I am kytebot, lord protector of the realm/I am kytebot, defender of liberty.
+Minor Goals
+ - (PULLED) Create special logs to test Hadoop table structure
+ - (DONE 8/13/2015) Add config for trusted users who can issue Kytebot commands
+ 
+ 
+ V0.5 Sprint Plan (to be finished end of Sep 2015)
+Major Goals
+ - (DONE 8/20/2015) Mavenize
+ - Implement Streaming Alerts
+Minor Goals
+ - Alert commands
+ - Alert configuration settings
+ 
+ 
+  V0.6 Sprint Plan (to be finished end of Nov 2015)
+Major Goals
+ - Integrate automatic builds with Jenkins
+ - 
+Minor Goals
+ - Expand unit testing
+ - 
+ 
+ 
+ 
+  V0.7 Sprint Plan (template)
+Major Goals
+ - 
+ - 
+Minor Goals
+ - 
+ - 
