@@ -6,6 +6,7 @@ import io.OutputThread;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
@@ -24,7 +25,7 @@ import msg.IRCMsg;
  */
 public class IRCBot implements Runnable {
 
-	private IRCBotConfigs configs;
+	private Properties configs;
 	private Socket socket;
 	private long heartBeatInMillis = -1;
 
@@ -38,9 +39,9 @@ public class IRCBot implements Runnable {
 	/**
 	 * Only initialize the queues at first
 	 */
-	public IRCBot( IRCBotConfigs configs ){
-		this.configs = configs;
-		this.heartBeatInMillis = configs.getHeartBeatInMillis();
+	public IRCBot( Properties prop ){
+		this.configs = prop;
+		this.heartBeatInMillis = Long.parseLong(prop.getProperty("heartbeat"));
 		inboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 		outboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 	}
@@ -55,7 +56,9 @@ public class IRCBot implements Runnable {
 		log.info("IRCBot is running");
 
 		try {
-			socket = new Socket( configs.getIrcServer(), configs.getIrcPort() );
+			String host = configs.getProperty("ircserver");
+			int port = Integer.parseInt(configs.getProperty("ircport"));
+			socket = new Socket( host, port );
 
 			InputThread it = new InputThread(socket, inboundMsgQ, null);			
 			OutputThread ot = new OutputThread(socket, outboundMsgQ, null);
@@ -78,10 +81,12 @@ public class IRCBot implements Runnable {
 				log.error(e);
 			}
 
-			outboundMsgQ.add( new IRCMsg("nick " + configs.getNick()) );	
-			outboundMsgQ.add( new IRCMsg("USER "+configs.getNick()+" 0 * :"+configs.getNick() ) );
-			outboundMsgQ.add( new IRCMsg("msg NickServ identify " + configs.getNickpass()) );
-
+			String nick = configs.getProperty("nick");
+			String pass = configs.getProperty("passwd");
+			outboundMsgQ.add( new IRCMsg("nick " + nick) );
+			outboundMsgQ.add( new IRCMsg("USER "+nick+" 0 * :"+nick) );
+			outboundMsgQ.add( new IRCMsg("msg NickServ identify " + pass) );
+			
 			while( true ){
 
 				log.info("IRCBot keep alive loop");

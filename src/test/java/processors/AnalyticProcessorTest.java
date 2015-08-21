@@ -1,6 +1,7 @@
 package processors;
 
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -13,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import botConfigs.IRCBotConfigs;
+import botConfigs.PropertyHandler;
 import processors.AnalyticProcessor;
 
 /**
@@ -23,7 +24,7 @@ import processors.AnalyticProcessor;
  */
 public class AnalyticProcessorTest {
 
-	private IRCBotConfigs testConfigs;
+	private Properties testConfigs;
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQ;
 	
 	private AnalyticProcessor processor = null;
@@ -32,10 +33,8 @@ public class AnalyticProcessorTest {
 	
 	@Before
 	public void setup(){
-		testConfigs = new IRCBotConfigs();
-		testConfigs.setStartChannel("#startChanForTests");
-		testConfigs.setNick("nickForTests");
-		testConfigs.setTrustedUsers("trustedUser_1,trustedUser_2");
+		PropertyHandler propHandler = new PropertyHandler();
+		testConfigs = PropertyHandler.readPropertyFile(propHandler.TEST_DEFAULT);
 		
 		outboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 		

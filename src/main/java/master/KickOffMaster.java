@@ -1,7 +1,9 @@
 package master;
 
+import java.util.Properties;
+
 import botConfigs.IRCBot;
-import botConfigs.IRCBotConfigs;
+import botConfigs.PropertyHandler;
 
 /**
  * 
@@ -14,16 +16,8 @@ public class KickOffMaster {
 
 	public static void main(String[] args){
 
-		IRCBotConfigs configs = new IRCBotConfigs();
-		configs.setNick("nick");
-		configs.setNickpass("passwd");
-		configs.setStartChannel("#startchan");	
-		configs.setAJoins("#ajoin_1,#ajoin_2,#ajoin_3");
-		configs.setIrcServer("irc.server.net");
-		
-		configs.setTrustedUsers("user_1,user_2");
-		configs.setStoryChans("");	//	Intentionally left blank
-		
+		PropertyHandler propHandler = new PropertyHandler();
+		Properties configs = PropertyHandler.readPropertyFile(propHandler.PRODUCTION_DEFAULT);
 		IRCBot bot = new IRCBot(configs);
 		Thread t0 = new Thread(bot);
 		t0.start();	

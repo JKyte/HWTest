@@ -1,5 +1,6 @@
 package processors;
 
+import java.util.Properties;
 import java.util.Random;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -7,7 +8,6 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import botConfigs.IRCBotConfigs;
 import msg.ComplexMsg;
 import msg.GenericMsg;
 import msg.IRCCommandHelper;
@@ -22,7 +22,7 @@ import msg.IRCMsg;
  */
 public class KytebotCommandProcessor {
 
-	private IRCBotConfigs configs;
+	private Properties configs;
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQ; 
 
 	private Random rand;
@@ -34,7 +34,7 @@ public class KytebotCommandProcessor {
 
 	private Logger log;
 	
-	public KytebotCommandProcessor(ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, IRCBotConfigs configs, Logger log){
+	public KytebotCommandProcessor(ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, Properties configs, Logger log){
 		this.outboundMsgQ = outboundMsgQ;
 		this.rand = new Random();
 		this.configs = configs;
@@ -67,7 +67,7 @@ public class KytebotCommandProcessor {
 		log.info(msg.getActualMsg() );
 
 		boolean trusted = false;
-		if( configs.getTrustedUsers().contains(msg.getSourceNick()) ){
+		if( configs.getProperty("trustedusers").contains(msg.getSourceNick()) ){
 			processMsgInternal( msg, true);
 			trusted = true;
 		}else{
@@ -107,7 +107,7 @@ public class KytebotCommandProcessor {
 			
 		} else {
 			
-			if( msg.getTarget().equals( configs.getNick() ) ){
+			if( msg.getTarget().equals( configs.getProperty("nick") ) ){
 				sendUntrustedResponse( msg.getOriginOfMsg() );
 			}
 			
@@ -125,14 +125,14 @@ public class KytebotCommandProcessor {
 	public void goTellAStory( ComplexMsg msg, boolean trusted ){
 		
 		//	1. Trusted Channel condition	
-		if( configs.getStoryChans().contains(msg.getOriginOfMsg()) ){
+		if( configs.getProperty("storychans").contains(msg.getOriginOfMsg()) ){
 			sendStoryResponse( msg.getOriginOfMsg() );
 			
 		//	2. Request comes from trusted user in a side chat	
-		}else if( trusted && msg.getTarget().equals( configs.getNick() ) ){
+		}else if( trusted && msg.getTarget().equals( configs.getProperty("nick") ) ){
 			sendStoryResponse( msg.getOriginOfMsg() );
 		}
-		log.debug( msg.getTarget() + " " + configs.getNick() + " " + trusted );
+		log.debug( msg.getTarget() + " " + configs.getProperty("nick") + " " + trusted );
 	}
 
 	public void sendUntrustedResponse( String msgTarget ){

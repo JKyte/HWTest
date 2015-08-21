@@ -2,13 +2,13 @@ package processors;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import botConfigs.IRCBotConfigs;
 import msg.ComplexMsg;
 import msg.GenericMsg;
 
@@ -20,7 +20,7 @@ import msg.GenericMsg;
  */
 public class AnalyticProcessor {
 
-	private IRCBotConfigs configsPointer;
+	private Properties configs;
 	@SuppressWarnings("unused")
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQ;
 
@@ -36,17 +36,17 @@ public class AnalyticProcessor {
 	@SuppressWarnings("unused")
 	private String _channelPrefixes = "#&+!";
 
-	public AnalyticProcessor( IRCBotConfigs configsPointer, ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, 
+	public AnalyticProcessor( Properties configs, ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, 
 			Logger log){
-		this.configsPointer = configsPointer;
+		this.configs = configs;
 		this.outboundMsgQ = outboundMsgQ;
 		
 		if( log == null ){
 			this.log = LogManager.getLogger(AnalyticProcessor.class);
-			this.kcp = new KytebotCommandProcessor(outboundMsgQ, configsPointer, null);
+			this.kcp = new KytebotCommandProcessor(outboundMsgQ, configs, null);
 		}else{
 			this.log = log;
-			this.kcp = new KytebotCommandProcessor(outboundMsgQ, configsPointer, log);
+			this.kcp = new KytebotCommandProcessor(outboundMsgQ, configs, log);
 		}
 		
 		
@@ -104,18 +104,18 @@ public class AnalyticProcessor {
 			log.debug( msg.getTarget()+":"+msg.getSourceNick()+":"+msg.getActualMsg() );
 
 			//	hook for processing kytebot commands within a channel
-			if( msg.getActualMsg().startsWith(configsPointer.getNick() ) ){
+			if( msg.getActualMsg().startsWith(configs.getProperty("nick") ) ){
 				kcp.processKytebotCmd(msg);
 			}
 
-		} else if ( msg.getTarget().equals( configsPointer.getNick() ) ){	//then side chat
+		} else if ( msg.getTarget().equals(configs.getProperty("nick") ) ){	//then side chat
 			
 			//	TODO write unit test to validate setting this variable + verify output msg does not
 			//	collide with Config.nick
 			msg.setOriginOfMsg(msg.getSourceNick());
 
 			//			hook for processing kytebot commands within a channel
-			if( msg.getActualMsg().startsWith(configsPointer.getNick() ) ){
+			if( msg.getActualMsg().startsWith(configs.getProperty("nick") ) ){
 				kcp.processKytebotCmd(msg);
 			}
 

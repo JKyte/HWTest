@@ -55,21 +55,22 @@ Minor Goals
  V0.5 Sprint Plan (to be finished end of Sep 2015)
 Major Goals
  - (DONE 8/20/2015) Mavenize
- - Implement Streaming Alerts
+ - (PUSHED) Implement Streaming Alerts
 Minor Goals
- - Alert commands
- - Alert configuration settings
+ - (PUSHED) Alert commands
+ - (PUSHED) Alert configuration settings
  
+# At one month ahead of the current schedule kytebot is now working. From this point
+# onward Sprints are not time-based but feature-based.
  
-  V0.6 Sprint Plan (to be finished end of Nov 2015)
+ V1.0.1 Sprint Plan
 Major Goals
- - Integrate automatic builds with Jenkins
- - 
+ - Implement last seen command
+ - Improve logger configs
 Minor Goals
- - Expand unit testing
- - 
- 
- 
+ - Clean up GMP
+ - Clean up AP
+
  
   V0.7 Sprint Plan (template)
 Major Goals

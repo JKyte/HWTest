@@ -1,5 +1,6 @@
 package processors;
 
+import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import msg.GenericMsg;
@@ -11,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import botConfigs.IRCBotConfigs;
+import botConfigs.PropertyHandler;
 import processors.GenericMessageParser;
 
 /**
@@ -21,7 +22,7 @@ import processors.GenericMessageParser;
  */
 public class GenericMessageParserTest {
 	
-	private IRCBotConfigs testConfigs;
+	private Properties testConfigs;
 	private GenericMessageParser parser;
 
 	private ConcurrentLinkedQueue<GenericMsg> inboundMsgQ;
@@ -31,9 +32,8 @@ public class GenericMessageParserTest {
 	
 	@Before
 	public void setup(){
-		testConfigs = new IRCBotConfigs();
-		testConfigs.setStartChannel("#startChanForTests");
-		testConfigs.setNick("nickForTests");
+		PropertyHandler propHandler = new PropertyHandler();
+		testConfigs = PropertyHandler.readPropertyFile(propHandler.TEST_DEFAULT);
 		
 		inboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 		outboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();

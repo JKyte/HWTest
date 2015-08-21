@@ -1,5 +1,6 @@
 package processors;
 
+import java.util.Properties;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
@@ -9,7 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import botConfigs.IRCBotConfigs;
+import botConfigs.PropertyHandler;
 import processors.KytebotCommandProcessor;
 import msg.ComplexMsg;
 import msg.GenericMsg;
@@ -23,16 +24,13 @@ public class KytebotCommandProcessorTest {
 
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQForTests;
 	private KytebotCommandProcessor kcp;
-	private IRCBotConfigs testConfigs;
+	private Properties testConfigs;
 	private static Logger log = LogManager.getLogger(KytebotCommandProcessorTest.class);
 
 	@Before
 	public void beforeTests(){
-		testConfigs = new IRCBotConfigs();
-		testConfigs.setStartChannel("#startChanForTests");
-		testConfigs.setNick("nickForTests");
-		testConfigs.setTrustedUsers("trustedUser_1,trustedUser_2");
-		testConfigs.setStoryChans("#chanForTests");
+		PropertyHandler propHandler = new PropertyHandler();
+		testConfigs = PropertyHandler.readPropertyFile(propHandler.TEST_DEFAULT);
 
 		outboundMsgQForTests = new ConcurrentLinkedQueue<GenericMsg>();
 
@@ -41,7 +39,7 @@ public class KytebotCommandProcessorTest {
 
 	@Test
 	public void testProcessKytebotCmd_TrustedUser(){
-		ComplexMsg msgForTest = new ComplexMsg("A", "B", "trustedUser_1", "D", "E", "F", "G", "H");
+		ComplexMsg msgForTest = new ComplexMsg("A", "B", "tr1", "D", "E", "F", "G", "H");
 
 		boolean trusted = kcp.processKytebotCmd(msgForTest);
 
@@ -71,7 +69,7 @@ public class KytebotCommandProcessorTest {
 
 	@Test
 	public void testProcessMsgInternal_else_condition2(){
-		ComplexMsg msgForTest = new ComplexMsg("A", "nickForTests", "C", "D", "E", "not a story command", "G", "H");
+		ComplexMsg msgForTest = new ComplexMsg("A", "nick", "C", "D", "E", "not a story command", "G", "H");
 
 		kcp.processMsgInternal(msgForTest, false);
 
@@ -81,22 +79,22 @@ public class KytebotCommandProcessorTest {
 
 	@Test
 	public void testGoTellAStory_condition1(){
-		ComplexMsg msgForTest = new ComplexMsg("A", "B", "C", "D", "E", "F", "G", "#chanForTests");
+		ComplexMsg msgForTest = new ComplexMsg("A", "B", "C", "D", "E", "F", "G", "#chan1");
 
 		kcp.goTellAStory(msgForTest, false);
 
 		GenericMsg msgAfterTest = outboundMsgQForTests.poll();
-		Assert.assertEquals("PRIVMSG #chanForTests :ACTION knows a few stories, but isn't willing to share just yet.", msgAfterTest.getData() );
+		Assert.assertEquals("PRIVMSG #chan1 :ACTION knows a few stories, but isn't willing to share just yet.", msgAfterTest.getData() );
 	}
 
 	@Test
 	public void testGoTellAStory_condition2(){
-		ComplexMsg msgForTest = new ComplexMsg("A", "nickForTests", "C", "D", "E", "F", "G", "nickForTests");
+		ComplexMsg msgForTest = new ComplexMsg("A", "nick", "C", "D", "E", "F", "G", "nick");
 
 		kcp.goTellAStory(msgForTest, true);
 
 		GenericMsg msgAfterTest = outboundMsgQForTests.poll();
-		Assert.assertEquals("PRIVMSG nickForTests :ACTION knows a few stories, but isn't willing to share just yet.", msgAfterTest.getData() );
+		Assert.assertEquals("PRIVMSG nick :ACTION knows a few stories, but isn't willing to share just yet.", msgAfterTest.getData() );
 	}
 
 	@Test

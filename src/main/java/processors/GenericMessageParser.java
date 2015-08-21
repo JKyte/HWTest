@@ -1,12 +1,12 @@
 package processors;
 
+import java.util.Properties;
 import java.util.StringTokenizer;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import botConfigs.IRCBotConfigs;
 import msg.ComplexMsg;
 import msg.GenericMsg;
 import msg.IRCMsg;
@@ -20,7 +20,7 @@ import msg.IRCMsg;
  */
 public class GenericMessageParser implements Runnable {
 
-	private IRCBotConfigs configs = null;
+	private Properties configs = null;
 	private ConcurrentLinkedQueue<GenericMsg> inboundMsgQ;
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQ;
 
@@ -28,10 +28,10 @@ public class GenericMessageParser implements Runnable {
 	
 	private Logger log;
 
-	public GenericMessageParser( IRCBotConfigs pointer, ConcurrentLinkedQueue<GenericMsg> inboundMsgQ, 
+	public GenericMessageParser( Properties configs, ConcurrentLinkedQueue<GenericMsg> inboundMsgQ, 
 			ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, Logger log ){
 
-		this.configs = pointer;
+		this.configs = configs;
 		this.inboundMsgQ = inboundMsgQ;
 		this.outboundMsgQ = outboundMsgQ;
 		
@@ -198,12 +198,12 @@ public class GenericMessageParser implements Runnable {
 
 			if( msgPayload.contains("Password accepted")){	//	Handle starting channel and any AJoins if they exist
 
-				outboundMsgQ.add( new IRCMsg("join " + configs.getStartChannel()) );
+				outboundMsgQ.add( new IRCMsg("join " + configs.getProperty("startchan")) );
 
 				log.info( "pw accepted, joining default channel -- msg: " + msgPayload );
 				
-				if( configs.getAJoins() != null ){
-					String[] ajoins = configs.getAJoins().split(",");
+				if( configs.getProperty("ajoins") != null ){
+					String[] ajoins = configs.getProperty("ajoins").split(",");
 					for( String chan : ajoins ){
 						outboundMsgQ.add( new IRCMsg("join " + chan ) );	
 					}
@@ -213,7 +213,7 @@ public class GenericMessageParser implements Runnable {
 
 				@SuppressWarnings("unused")
 				UserInputBox uib = new UserInputBox(outboundMsgQ);	// this is temporary, final version
-				outboundMsgQ.add( new IRCMsg("nickserv identify " + configs.getNickpass()) );	//shall have GUI pointed at inboundMsgQ
+				outboundMsgQ.add( new IRCMsg("nickserv identify " + configs.getProperty("passwd")) );	//shall have GUI pointed at inboundMsgQ
 
 			}
 		} 

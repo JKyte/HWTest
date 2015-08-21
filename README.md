@@ -11,26 +11,28 @@ This project can be directly imported into eclipse via the following steps
 
 ## Running the bot (from Eclipse)
 1. Open the kytebot project in Eclipse
-2. Open src/main/java/master/KickOffMaster.java
-3. Edit the variables for 'nick', 'passwd', '#startchan', and 'irc.server.net'
+2. Open ./properties/production.properties
+3. Edit the variables for 'nick', 'passwd', 'startchan', and 'ircserver'
 4. Run the class as a Java application
 
 
-## Current Sprint Goals (V0.5 sprint)
-1. Expand kytebot commands
-2. Update logger configs
+## Current Sprint Goals (V1.0.1 sprint)
+1. Implement last seen command
+2. Improve logger configs
 3. Update instructions for cloning the repo
+4. Code quality check on GMP/AP
 
 
 ## Feature Backlog
 0. Stabilize functionality on maven
 1. Alerts based on IRC messages
-2. Trusted users, trusted user actions
+2. (DONE) Trusted users, trusted user actions
 3. Framework for automatic replies/kytebot commands
 4. Use JavaFX for UI
 5. Word cloud
 6. Last Seen
 7. Courier module
 8. Streamline messages
-9. Configs for ajoin
+9. (DONE) Configs for ajoin
 10. Allow flexibility in kytebot command syntax
+11. Refactor msg structure for better readability
