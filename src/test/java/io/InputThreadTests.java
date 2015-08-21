@@ -50,7 +50,7 @@ public class InputThreadTests {
 		boolean connected = false;
 
 		try {
-			System.out.println("Bind to port: " + test_port );
+			log.info("Bind to port: " + test_port );
 			if( socket == null){
 				socket = new Socket();
 			}
@@ -102,11 +102,11 @@ public class InputThreadTests {
 			try{
 				t0.interrupt();
 			} catch (Exception e2){
-				System.out.println("e2");
+				log.error(e2);
 			}
 
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 

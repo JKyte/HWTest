@@ -93,15 +93,9 @@ public class AnalyticProcessor {
 	 * @param msg - a ComplexMsg object
 	 */
 	private void handlePrivMsg(ComplexMsg msg) {
-		/**	
-		 * System.out.println("Handling PRIVMSG");
-		 * System.out.println(">" + msg.getTarget());
-		 * System.out.println(">" + msg.getActualMsg());
-		 */
 
 		if( msg.getTarget().startsWith("#") ){	//then channel msg. This may be expanded for users as well.
 			msg.setOriginOfMsg(msg.getTarget());
-
 
 			if( !chans.containsKey(msg.getTarget() ) ){
 				log.info(msg.getTarget());
@@ -125,7 +119,6 @@ public class AnalyticProcessor {
 				kcp.processKytebotCmd(msg);
 			}
 
-
 			if( !users.containsKey(msg.getSourceNick()) ){
 				log.info(msg.getSourceNick());
 				users.put(msg.getSourceNick(), msg.getSourceNick());
@@ -135,13 +128,13 @@ public class AnalyticProcessor {
 		} else {
 
 			//	debug info
-			System.out.println( msg.getCommand() );
-			System.out.println( msg.getOriginalMsg());
-			System.out.println( msg.getSourceHostname());
-			System.out.println( msg.getSourceLogin());
-			System.out.println( msg.getSourceNick());
-			System.out.println( msg.getTarget());
-			System.out.println( msg.getActualMsg());
+			log.debug( msg.getCommand() );
+			log.debug( msg.getOriginalMsg());
+			log.debug( msg.getSourceHostname());
+			log.debug( msg.getSourceLogin());
+			log.debug( msg.getSourceNick());
+			log.debug( msg.getTarget());
+			log.debug( msg.getActualMsg());
 		}
 
 	}
@@ -158,7 +151,7 @@ public class AnalyticProcessor {
 
 		String userHost = tokenizer.nextToken();
 
-		System.out.println( user + "\t " + userHost );
+		log.info( user + "\t " + userHost );
 
 		return true;
 	}
@@ -174,7 +167,7 @@ public class AnalyticProcessor {
 
 			String perms = infoPlusChan.split("#")[0];
 			String chan = infoPlusChan.split("#")[1];
-			System.out.println( user + "\t" + perms + "\t" + chan );
+			log.info( user + "\t" + perms + "\t" + chan );
 
 			//	~ indicates user is a channel founder
 			//	& indicates protected user			

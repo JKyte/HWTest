@@ -19,12 +19,18 @@ This project can be directly imported into eclipse via the following steps
 ## Current Sprint Goals (V0.5 sprint)
 1. Expand kytebot commands
 2. Update logger configs
+3. Update instructions for cloning the repo
 
 
 ## Feature Backlog
-0. Stabalize funcationality on maven
+0. Stabilize functionality on maven
 1. Alerts based on IRC messages
 2. Trusted users, trusted user actions
 3. Framework for automatic replies/kytebot commands
-4. Mavenize to ease build process
-5. Use JavaFX for UI
+4. Use JavaFX for UI
+5. Word cloud
+6. Last Seen
+7. Courier module
+8. Streamline messages
+9. Configs for ajoin
+10. Allow flexibility in kytebot command syntax

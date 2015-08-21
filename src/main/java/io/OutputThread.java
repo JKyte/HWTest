@@ -38,8 +38,7 @@ public class OutputThread implements Runnable{
 		}
 
 		try {
-			bw = new BufferedWriter(
-					new OutputStreamWriter(socket.getOutputStream()));
+			bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -74,10 +73,8 @@ public class OutputThread implements Runnable{
 				Thread.sleep(1000);
 			}
 		} catch (InterruptedException e){
-			//System.out.println("e0");
-			//e.printStackTrace();
+			log.error(e);
 		} finally {
-			
 			log.fatal("FATAL: OutputThread has stopped.");
 		}
 	}

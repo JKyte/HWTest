@@ -17,6 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.KeyStroke;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import msg.CommandMsg;
 import msg.GenericMsg;
 import msg.IRCMsg;
@@ -33,12 +36,13 @@ public class UserInputBox extends JFrame implements ActionListener {
 	private JButton sendMsgBtn = new JButton("Send msg");
 	private JButton sendCmdBtn = new JButton("Send cmd");
 
-
 	private JTextArea textArea = new JTextArea(8, 40);
 
 	private JScrollPane scrollPane = new JScrollPane(textArea);
 
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQ;
+	
+	public static final Logger log = LogManager.getLogger(UserInputBox.class);
 
 	@SuppressWarnings("deprecation")
 	public UserInputBox(  ConcurrentLinkedQueue<GenericMsg> msgQ ) {
@@ -75,7 +79,7 @@ public class UserInputBox extends JFrame implements ActionListener {
             
             @Override
 			public void actionPerformed(ActionEvent e) {
-                System.out.println(e.getActionCommand() + " was clicked");
+                log.info(e.getActionCommand() + " was clicked");
             }
         });
         btn.setMargin(new Insets(8, 8, 8, 8));

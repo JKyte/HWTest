@@ -54,7 +54,7 @@ public class OutputThreadTests {
 		boolean connected = false;
 
 		try {
-			System.out.println("Bind to port: " + test_port );
+			log.info("Bind to port: " + test_port );
 			if( socket == null){
 				socket = new Socket();
 			}
@@ -98,13 +98,13 @@ public class OutputThreadTests {
 				try{
 					t0.interrupt();
 				} catch (Exception e2){
-					System.out.println("e2");
+					log.error(e2);
 				}
 			}
 
 			Assert.assertEquals(IRC_PAYLOAD, lineRead);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 
@@ -129,13 +129,13 @@ public class OutputThreadTests {
 				try{
 					t0.interrupt();
 				} catch (Exception e2){
-					System.out.println("e2");
+					log.error(e2);
 				}
 			}
 
 			Assert.assertEquals( false, socketReady);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 
@@ -153,7 +153,7 @@ public class OutputThreadTests {
 			String lineSent = socketReader.readLine();
 			Assert.assertEquals(TEST_MSG, lineSent);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 	}
 

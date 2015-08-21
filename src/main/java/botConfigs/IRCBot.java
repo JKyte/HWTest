@@ -52,7 +52,7 @@ public class IRCBot implements Runnable {
 	@Override
 	public void run() {
 
-		System.out.println("IRCBot running");
+		log.info("IRCBot is running");
 
 		try {
 			socket = new Socket( configs.getIrcServer(), configs.getIrcPort() );
@@ -75,7 +75,7 @@ public class IRCBot implements Runnable {
 			try {
 				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.error(e);
 			}
 
 			outboundMsgQ.add( new IRCMsg("nick " + configs.getNick()) );	
@@ -89,7 +89,7 @@ public class IRCBot implements Runnable {
 				try {
 					Thread.sleep(heartBeatInMillis);
 				} catch (InterruptedException e) {
-					e.printStackTrace();
+					log.error(e);
 				}
 			}
 

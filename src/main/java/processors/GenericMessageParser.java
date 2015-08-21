@@ -90,8 +90,7 @@ public class GenericMessageParser implements Runnable {
 			return;
 		}
 
-		System.out.println( "SERVER: " + msgPayload );		
-		log.info(msgPayload);
+		log.info("SERVER: " + msgPayload);
 
 		String sourceNick = "";
 		String sourceLogin = "";
@@ -137,7 +136,7 @@ public class GenericMessageParser implements Runnable {
 						target = token;
 					}
 				} else {		
-					System.out.println("UNKNOWN CMD: " + msgPayload );
+					log.error("UNKNOWN CMD: " + msgPayload );
 					return;
 				}
 
@@ -178,7 +177,7 @@ public class GenericMessageParser implements Runnable {
 				//	this.onFinger(sourceNick, sourceLogin, sourceHostname, target);
 			} else if ((tokenizer = new StringTokenizer(request)).countTokens() >= 5 && tokenizer.nextToken().equals("DCC")) {
 				// This is a DCC request.
-				System.out.println("Don't know how to process a DCC request");
+				log.warn("Don't know how to process a DCC request");
 				//	boolean success = _dccManager.processRequest(sourceNick, sourceLogin, sourceHostname, request);
 				//	if (!success) {
 				// The DccManager didn't know what to do with the line.
@@ -187,7 +186,7 @@ public class GenericMessageParser implements Runnable {
 			} else {
 				// An unknown CTCP message - ignore it.
 				//	this.onUnknown(line);
-				System.out.println("Unknown CTCP msg: " + msgPayload);
+				log.warn("Unknown CTCP msg: " + msgPayload);
 			}
 		} 
 
@@ -195,13 +194,13 @@ public class GenericMessageParser implements Runnable {
 			// Someone is sending a notice.
 			//	this.onNotice(sourceNick, sourceLogin, sourceHostname, target, line.substring(line.indexOf(" :") + 2));
 
-			System.out.println("NOTICE: " + msgPayload);
+			log.info("NOTICE: " + msgPayload);
 
 			if( msgPayload.contains("Password accepted")){
 
 				outboundMsgQ.add( new IRCMsg("join " + configsPointer.getStartChannel()) );
 
-				System.out.println( "pw accepted, joining default channel -- msg: " + msgPayload );
+				log.info( "pw accepted, joining default channel -- msg: " + msgPayload );
 
 			} else if( msgPayload.contains("This nickname is registered and protected")){
 

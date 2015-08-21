@@ -132,7 +132,7 @@ public class KytebotCommandProcessor {
 		}else if( trusted && msg.getTarget().equals( configs.getNick() ) ){
 			sendStoryResponse( msg.getOriginOfMsg() );
 		}
-		System.out.println( msg.getTarget() + " " + configs.getNick() + " " + trusted );
+		log.debug( msg.getTarget() + " " + configs.getNick() + " " + trusted );
 	}
 
 	public void sendUntrustedResponse( String msgTarget ){
