@@ -8,12 +8,17 @@
 		<File name="prod" fileName="logs/production.log">
 			<PatternLayout pattern="%d{HH:mm:ss} [%t]-%c{1}-%-5level- %msg%n" />
 		</File>
+		<File name="input" fileName="logs/input.log">
+			<PatternLayout pattern="%d{HH:mm:ss} [%t]-%c{1}-%-5level- %msg%n" />
+		</File>
 	</appenders>
 
 	<loggers>
 		<root level="debug">
 			<appender-ref ref="Console" level="ALL" />
-			<appender-ref ref="prod" level="ALL" />
+			<appender-ref ref="prod" level="INFO" />
+			<appender-ref ref="prod" level="DEBUG" />
+			<appender-ref ref="input" level="INFO" />
 		</root>
 	</loggers>
 </configuration>

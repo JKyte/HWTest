@@ -18,6 +18,7 @@ public class IRCBotConfigsTest {
 		configs.setNick("nickForTests");
 		configs.setNickpass("nickpassForTests");
 		configs.setStartChannel("#startchan");
+		configs.setAJoins("#ajoin_1,#ajoin_2");
 		configs.setIrcPort(8080);
 		configs.setHeartBeatInMillis(9999);
 		configs.setIrcServer("irc.server.net");
@@ -27,6 +28,7 @@ public class IRCBotConfigsTest {
 		Assert.assertEquals("nickForTests", configs.getNick());
 		Assert.assertEquals("nickpassForTests", configs.getNickpass());
 		Assert.assertEquals("#startchan", configs.getStartChannel());
+		Assert.assertEquals("#ajoin_1,#ajoin_2", configs.getAJoins());
 		Assert.assertEquals(8080, configs.getIrcPort());
 		Assert.assertEquals(9999, configs.getHeartBeatInMillis());
 		Assert.assertEquals("irc.server.net", configs.getIrcServer());

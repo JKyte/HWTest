@@ -18,11 +18,12 @@ public class KickOffMaster {
 		configs.setNick("nick");
 		configs.setNickpass("passwd");
 		configs.setStartChannel("#startchan");	
+		configs.setAJoins("#ajoin_1,#ajoin_2,#ajoin_3");
 		configs.setIrcServer("irc.server.net");
 		
 		configs.setTrustedUsers("user_1,user_2");
 		configs.setStoryChans("");	//	Intentionally left blank
-
+		
 		IRCBot bot = new IRCBot(configs);
 		Thread t0 = new Thread(bot);
 		t0.start();	

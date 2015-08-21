@@ -20,7 +20,7 @@ import msg.IRCMsg;
  */
 public class GenericMessageParser implements Runnable {
 
-	private IRCBotConfigs configsPointer = null;
+	private IRCBotConfigs configs = null;
 	private ConcurrentLinkedQueue<GenericMsg> inboundMsgQ;
 	private ConcurrentLinkedQueue<GenericMsg> outboundMsgQ;
 
@@ -31,16 +31,16 @@ public class GenericMessageParser implements Runnable {
 	public GenericMessageParser( IRCBotConfigs pointer, ConcurrentLinkedQueue<GenericMsg> inboundMsgQ, 
 			ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, Logger log ){
 
-		this.configsPointer = pointer;
+		this.configs = pointer;
 		this.inboundMsgQ = inboundMsgQ;
 		this.outboundMsgQ = outboundMsgQ;
 		
 		if( log == null ){
 			this.log = LogManager.getLogger(GenericMessageParser.class);
-			analytics = new AnalyticProcessor(this.configsPointer, this.outboundMsgQ, null);
+			analytics = new AnalyticProcessor(this.configs, this.outboundMsgQ, null);
 		}else{
 			this.log = log;
-			analytics = new AnalyticProcessor(this.configsPointer, this.outboundMsgQ, log);	
+			analytics = new AnalyticProcessor(this.configs, this.outboundMsgQ, log);	
 		}
 		
 	}
@@ -90,7 +90,7 @@ public class GenericMessageParser implements Runnable {
 			return;
 		}
 
-		log.info("SERVER: " + msgPayload);
+		log.debug("SERVER: " + msgPayload);
 
 		String sourceNick = "";
 		String sourceLogin = "";
@@ -158,7 +158,7 @@ public class GenericMessageParser implements Runnable {
 		 *  Check for CTCP requests. Currently we aren't doing much with this
 		 */
 		if (command.equals("PRIVMSG") && msgPayload.indexOf(":\u0001") > 0 && msgPayload.endsWith("\u0001")) {
-			log.info(">>>>>"+msgPayload);
+			log.debug("Payload"+msgPayload);
 			String request = msgPayload.substring(msgPayload.indexOf(":\u0001") + 2, msgPayload.length() - 1);
 			if ( request.equals("VERSION") ) {
 				// VERSION request
@@ -194,19 +194,26 @@ public class GenericMessageParser implements Runnable {
 			// Someone is sending a notice.
 			//	this.onNotice(sourceNick, sourceLogin, sourceHostname, target, line.substring(line.indexOf(" :") + 2));
 
-			log.info("NOTICE: " + msgPayload);
+			log.debug("NOTICE: " + msgPayload);
 
-			if( msgPayload.contains("Password accepted")){
+			if( msgPayload.contains("Password accepted")){	//	Handle starting channel and any AJoins if they exist
 
-				outboundMsgQ.add( new IRCMsg("join " + configsPointer.getStartChannel()) );
+				outboundMsgQ.add( new IRCMsg("join " + configs.getStartChannel()) );
 
 				log.info( "pw accepted, joining default channel -- msg: " + msgPayload );
+				
+				if( configs.getAJoins() != null ){
+					String[] ajoins = configs.getAJoins().split(",");
+					for( String chan : ajoins ){
+						outboundMsgQ.add( new IRCMsg("join " + chan ) );	
+					}
+				}
 
 			} else if( msgPayload.contains("This nickname is registered and protected")){
 
 				@SuppressWarnings("unused")
 				UserInputBox uib = new UserInputBox(outboundMsgQ);	// this is temporary, final version
-				outboundMsgQ.add( new IRCMsg("nickserv identify " + configsPointer.getNickpass()) );	//shall have GUI pointed at inboundMsgQ
+				outboundMsgQ.add( new IRCMsg("nickserv identify " + configs.getNickpass()) );	//shall have GUI pointed at inboundMsgQ
 
 			}
 		} 

@@ -12,7 +12,7 @@ public class IRCBotConfigs {
 	private String nick;
 	private String nickpass;
 	private String startChannel;
-	
+	private String ajoins;
 	
 	private String ircServer;
 	private int ircPort = 6667;
@@ -35,6 +35,14 @@ public class IRCBotConfigs {
 
 	public void setStartChannel(String startChannel) {
 		this.startChannel = startChannel;
+	}
+
+	public String getAJoins() {
+		return ajoins;
+	}
+
+	public void setAJoins(String ajoins) {
+		this.ajoins = ajoins;
 	}
 
 	public String getIrcServer() {

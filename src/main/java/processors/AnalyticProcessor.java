@@ -98,10 +98,10 @@ public class AnalyticProcessor {
 			msg.setOriginOfMsg(msg.getTarget());
 
 			if( !chans.containsKey(msg.getTarget() ) ){
-				log.info(msg.getTarget());
+				log.debug(msg.getTarget());
 				chans.put(msg.getTarget(), msg.getTarget() );	//	K,V is #chan,#chan
 			}
-			log.info( msg.getTarget()+":"+msg.getSourceNick()+":"+msg.getActualMsg() );
+			log.debug( msg.getTarget()+":"+msg.getSourceNick()+":"+msg.getActualMsg() );
 
 			//	hook for processing kytebot commands within a channel
 			if( msg.getActualMsg().startsWith(configsPointer.getNick() ) ){
@@ -120,10 +120,10 @@ public class AnalyticProcessor {
 			}
 
 			if( !users.containsKey(msg.getSourceNick()) ){
-				log.info(msg.getSourceNick());
+				log.debug(msg.getSourceNick());
 				users.put(msg.getSourceNick(), msg.getSourceNick());
 			}
-			log.info( msg.getSourceNick()+":"+msg.getTarget()+":"+msg.getActualMsg() );
+			log.debug( msg.getSourceNick()+":"+msg.getTarget()+":"+msg.getActualMsg() );
 
 		} else {
 
@@ -151,7 +151,7 @@ public class AnalyticProcessor {
 
 		String userHost = tokenizer.nextToken();
 
-		log.info( user + "\t " + userHost );
+		log.debug( user + "\t " + userHost );
 
 		return true;
 	}
@@ -167,7 +167,7 @@ public class AnalyticProcessor {
 
 			String perms = infoPlusChan.split("#")[0];
 			String chan = infoPlusChan.split("#")[1];
-			log.info( user + "\t" + perms + "\t" + chan );
+			log.debug( user + "\t" + perms + "\t" + chan );
 
 			//	~ indicates user is a channel founder
 			//	& indicates protected user			
