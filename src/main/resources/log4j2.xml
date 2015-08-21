@@ -2,19 +2,18 @@
 <configuration status="WARN">
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{HH:mm:ss} [%t]-%c{1}-%-5level- %msg%n" />
 		</Console>
 
-		<File name="MyFile" fileName="logs/app.log">
-			<PatternLayout
-				pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		<File name="prod" fileName="logs/production.log">
+			<PatternLayout pattern="%d{HH:mm:ss} [%t]-%c{1}-%-5level- %msg%n" />
 		</File>
 	</appenders>
 
 	<loggers>
 		<root level="debug">
-			<appender-ref ref="Console" level="info" />
-			<appender-ref ref="MyFile" level="error" />
+			<appender-ref ref="Console" level="ALL" />
+			<appender-ref ref="prod" level="ALL" />
 		</root>
 	</loggers>
 </configuration>

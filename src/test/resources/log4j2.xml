@@ -2,21 +2,17 @@
 <configuration status="WARN">
 	<appenders>
 		<Console name="Console" target="SYSTEM_OUT">
-			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{HH:mm:ss} [%t]-%c{1}-%-5level- %msg%n" />
 		</Console>
 
 		<File name="LogForTests" fileName="logs/log4tests.log">
-			<PatternLayout
-				pattern="%d{yyyy-mm-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+			<PatternLayout pattern="%d{HH:mm:ss} [%t]-%c{1}-%-5level- %msg%n" />
 		</File>
 	</appenders>
 
 	<loggers>
 		<root level="debug">
-			<appender-ref ref="LogForTests" level="info" />
-			<appender-ref ref="LogForTests" level="warn" />
-			<appender-ref ref="LogForTests" level="error" />
-			<appender-ref ref="LogForTests" level="fatal" />
+			<appender-ref ref="LogForTests" level="ALL" />
 		</root>
 	</loggers>
 </configuration>

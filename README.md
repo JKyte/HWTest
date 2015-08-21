@@ -16,12 +16,13 @@ This project can be directly imported into eclipse via the following steps
 4. Run the class as a Java application
 
 
-## Current Sprint Goals (V0.4 sprint)
-1. Expand unit testing of core code
-2. Add logic for kytebot commands
+## Current Sprint Goals (V0.5 sprint)
+1. Expand kytebot commands
+2. Update logger configs
 
 
-## Wishlist of Features
+## Feature Backlog
+0. Stabalize funcationality on maven
 1. Alerts based on IRC messages
 2. Trusted users, trusted user actions
 3. Framework for automatic replies/kytebot commands
