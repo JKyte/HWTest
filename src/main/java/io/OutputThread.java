@@ -31,11 +31,7 @@ public class OutputThread implements Runnable{
 		this.setSocket(socket);
 		this.outboundMsgQ = outboundMsgQ;
 
-		if( log == null ){
-			this.log = LogManager.getLogger(OutputThread.class);
-		}else{
-			this.log = log;
-		}
+		this.log = LogManager.getLogger(OutputThread.class);
 
 		try {
 			bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));

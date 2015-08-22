@@ -36,21 +36,13 @@ public class AnalyticProcessor {
 	@SuppressWarnings("unused")
 	private String _channelPrefixes = "#&+!";
 
-	public AnalyticProcessor( Properties configs, ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, 
-			Logger log){
+	public AnalyticProcessor( Properties configs, ConcurrentLinkedQueue<GenericMsg> outboundMsgQ ){
 		this.configs = configs;
 		this.outboundMsgQ = outboundMsgQ;
-		
-		if( log == null ){
-			this.log = LogManager.getLogger(AnalyticProcessor.class);
-			this.kcp = new KytebotCommandProcessor(outboundMsgQ, configs, null);
-		}else{
-			this.log = log;
-			this.kcp = new KytebotCommandProcessor(outboundMsgQ, configs, log);
-		}
-		
-		
 
+		this.log = LogManager.getLogger(AnalyticProcessor.class);
+		this.kcp = new KytebotCommandProcessor(outboundMsgQ, configs);
+		
 		chans = new HashMap<String,String>();
 		users = new HashMap<String,String>();
 		privchats = new HashMap<String,String>();

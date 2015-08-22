@@ -34,16 +34,11 @@ public class KytebotCommandProcessor {
 
 	private Logger log;
 	
-	public KytebotCommandProcessor(ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, Properties configs, Logger log){
+	public KytebotCommandProcessor(ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, Properties configs){
 		this.outboundMsgQ = outboundMsgQ;
 		this.rand = new Random();
 		this.configs = configs;
-		
-		if( log == null ){
-			this.log = LogManager.getLogger(KytebotCommandProcessor.class);
-		}else{
-			this.log = log;
-		}
+		this.log = LogManager.getLogger(KytebotCommandProcessor.class);
 	}
 
 	/**

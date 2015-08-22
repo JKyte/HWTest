@@ -38,7 +38,7 @@ public class GenericMessageParserTest {
 		inboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 		outboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 		
-		parser = new GenericMessageParser(testConfigs, inboundMsgQ, outboundMsgQ, log);
+		parser = new GenericMessageParser(testConfigs, inboundMsgQ, outboundMsgQ);
 	}
 	
 	@Test

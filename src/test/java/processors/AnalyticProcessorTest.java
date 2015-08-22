@@ -38,7 +38,7 @@ public class AnalyticProcessorTest {
 		
 		outboundMsgQ = new ConcurrentLinkedQueue<GenericMsg>();
 		
-		processor = new AnalyticProcessor(testConfigs, outboundMsgQ, log);
+		processor = new AnalyticProcessor(testConfigs, outboundMsgQ);
 	}
 	
 	@Test
@@ -109,8 +109,8 @@ public class AnalyticProcessorTest {
 	@Test
 	public void testHandlePrivMsg_PRIVMSG_sideChat(){
 		//	Tests a side chat
-		ComplexMsg msg = new ComplexMsg("PRIVMSG", "nickForTests", "sourceNick",
-				"sourceLogin", "sourceHostname", "nickForTests actualMsg", "originalMsg", "nickForTests");
+		ComplexMsg msg = new ComplexMsg("PRIVMSG", "nick", "sourceNick",
+				"sourceLogin", "sourceHostname", "nick actualMsg", "originalMsg", "nick");
 		processor.processMessage(msg);
 		Assert.assertEquals(true, true);
 	}

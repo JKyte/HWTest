@@ -62,7 +62,7 @@ public class IRCBot implements Runnable {
 
 			InputThread it = new InputThread(socket, inboundMsgQ, null);			
 			OutputThread ot = new OutputThread(socket, outboundMsgQ, null);
-			parser = new GenericMessageParser(configs, inboundMsgQ, outboundMsgQ, null);
+			parser = new GenericMessageParser(configs, inboundMsgQ, outboundMsgQ);
 			
 			Thread t1 = new Thread( it );
 			Thread t2 = new Thread( ot );

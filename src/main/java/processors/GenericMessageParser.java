@@ -29,20 +29,13 @@ public class GenericMessageParser implements Runnable {
 	private Logger log;
 
 	public GenericMessageParser( Properties configs, ConcurrentLinkedQueue<GenericMsg> inboundMsgQ, 
-			ConcurrentLinkedQueue<GenericMsg> outboundMsgQ, Logger log ){
+			ConcurrentLinkedQueue<GenericMsg> outboundMsgQ ){
 
 		this.configs = configs;
 		this.inboundMsgQ = inboundMsgQ;
 		this.outboundMsgQ = outboundMsgQ;
-		
-		if( log == null ){
-			this.log = LogManager.getLogger(GenericMessageParser.class);
-			analytics = new AnalyticProcessor(this.configs, this.outboundMsgQ, null);
-		}else{
-			this.log = log;
-			analytics = new AnalyticProcessor(this.configs, this.outboundMsgQ, log);	
-		}
-		
+		this.log = LogManager.getLogger(GenericMessageParser.class);
+		analytics = new AnalyticProcessor(this.configs, this.outboundMsgQ);
 	}
 
 	@Override

@@ -30,12 +30,7 @@ public class InputThread implements Runnable{
 		
 		this.socket = socket;
 		this.inboundMsgQ = inboundMsgQ;
-
-		if( log == null ){
-			this.log = LogManager.getLogger(InputThread.class);
-		}else{
-			this.log = log;
-		}
+		this.log = LogManager.getLogger(InputThread.class);
 		
 	}
 	

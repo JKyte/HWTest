@@ -34,7 +34,7 @@ public class KytebotCommandProcessorTest {
 
 		outboundMsgQForTests = new ConcurrentLinkedQueue<GenericMsg>();
 
-		kcp = new KytebotCommandProcessor(outboundMsgQForTests, testConfigs, log);
+		kcp = new KytebotCommandProcessor(outboundMsgQForTests, testConfigs);
 	}
 
 	@Test
